@@ -50,7 +50,7 @@ def index(request):
                 City.objects.filter(name = city.name).delete()
 
     cities = City.objects.all()
-
+    # City.objects.all().delete()
     context = {'weather_data':weather_data, 'form':form, 'cities':cities}
     return render(request, "index.html", context)
 
