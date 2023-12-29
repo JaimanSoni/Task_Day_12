@@ -5,7 +5,7 @@ from .models import City
 from .forms import CityForm
 from datetime import datetime
 # Create your views here.
-weather_data = []
+
 def index(request):
     cities = City.objects.all()
     
@@ -21,7 +21,7 @@ def index(request):
     
     form = CityForm()
 
-    global weather_data
+    weather_data = []
     if len(cities) > 0:
         for city in cities:
             city_weather = requests.get(url.format(city)).json()
