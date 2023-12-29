@@ -1,0 +1,104 @@
+{% comment %} {% for weather in weather_data %}
+<img src="https://openweathermap.org/img/wn/{{weather.icon}}.png" alt="">
+{% endfor %} {% endcomment %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light justify-content-between" style="height: 100px; margin-bottom: 55px;">
+        <a class="navbar-brand">Weather App</a>
+        <form class="form-inline" style="width: 80%;" method="POST">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" name='name' style="width: 75%; height: 50px;" type="search"
+                placeholder="Search City" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" style="height: 45px; width: 100px;"
+                type="submit">Search</button>
+        </form>
+    </nav>
+    {% if cities|length > 0 %}
+
+    {% for weather in weather_data reversed %}
+    <form method="GET" action="onecity/{{forloop.counter0}}">
+
+        <button type="submit" class="btn mx-auto button mt-5" style="width: 82%; display: block;">
+
+            <div class="card pt-2"
+                style="width: 100%; display: flex; color:white; flex-direction: row; justify-content: space-between;
+                {% if weather.description == 'clear sky' %}
+                background-image: url('{% static 'images/clear sky.jpg' %}');
+                {% elif weather.description == 'mist' %}
+                background-image: url('{% static 'images/mist.jpg' %}');
+                {% elif weather.description == 'broken clouds' %}
+                background-image: url('{% static 'images/broken clouds.jpg' %}');
+                {% elif weather.description == 'few clouds' %}
+                background-image: url('{% static 'images/few clouds.jpg' %}');
+                {% elif weather.description == 'scattered clouds' %}
+                background-image: url('{% static 'images/scattered clouds.jpg' %}');
+                {% elif weather.description == 'thunderstrom' %}
+                background-image: url('{% static 'images/thunderstrom.jpg' %}');
+                {% elif weather.description == 'shower rain' %}
+                background-image: url('{% static 'images/shower rain.jpg' %}');
+                {% elif weather.description == 'rain' %}
+                background-image: url('{% static 'images/rain.jpg' %}');
+                {% elif weather.description == 'snow' %}
+                background-image: url('{% static 'images/snow.jpg' %}');
+                {% elif weather.description == 'haze' %}
+                background-image: url('{% static 'images/haze.jpg' %}');
+                {% elif weather.description == 'smoke' %}
+                background-image: url('{% static 'images/smoke.jpg' %}');
+                {% else %}
+                background-image: url('{% static 'images/clear sky.jpg' %}');
+                {% endif %}
+                  background-size: cover;">
+                <div class="text-left">
+                    <div class="card-body" style="display: inline-block;">
+                        <h1>{{weather.city}}</h1>
+                        <h5>{{weather.time}}</h5>
+                    </div>
+                    <div class="card-body">
+                        {{weather.description}}
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="card-body" style="display: inline-block; padding-top: 0px; padding-right: 15px;">
+                        <h1 style="font-size: 80px;">{{weather.temprature|floatformat}}&deg;<sup>c</sup></h1>
+                    </div>
+                    <div class="card-body" style="padding-right: 34px;">
+                        <p> H: {{weather.temprature_max|floatformat}}&deg;<sup>c</sup> &nbsp; L: {{weather.temprature_min|floatformat}}&deg;<sup>c</sup></p>
+                    </div>
+                </div>
+            </div>
+        </button>
+    </form>
+    {% endfor %}
+    {% else %}
+    <h1 class="text-center">You have not searched any city yet!</h1>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+</body>
+
+</html>
